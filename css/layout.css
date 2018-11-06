@@ -498,3 +498,40 @@
   margin-top: 40px;
   margin-bottom: 50px;
 }
+/*登录页面*/
+#form {
+  width: 400px;
+  margin: 120px auto;
+  background: rgba(255, 255, 255, 0.2);
+}
+@media all and (min-width: 320px) and (max-width: 767px) {
+  #form {
+    width: 100%;
+    background: none;
+  }
+}
+#form .fa {
+  position: relative;
+  top: 27px;
+  left: 6px;
+  display: inline-block;
+  color: #ccc;
+}
+#form input[type="text"],
+#form input[type="password"] {
+  padding-left: 26px;
+}
+#form .checkbox {
+  padding-left: 21px;
+}
+/*欢迎页*/
+.welcome .h2 {
+  margin-bottom: 20px;
+}
+/*用户留言列表页*/
+.msgList {
+  padding-top: 10px;
+}
+.msgList .table tr td {
+  vertical-align: middle;
+}

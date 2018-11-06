@@ -41,8 +41,8 @@
 
 <!--banner begin-->
 <div class="banner container-fluid">
-    <img class="hidden-xs hidden-sm img-responsive" src="../images/news-banner.jpg" alt="">
-    <img class="hidden-md hidden-lg img-responsive" src="../images/news-mbanner.jpg" alt="">
+    <img class=" img-responsive" src="../images/news-banner.jpg" alt="">
+    <img class="hidden-xs hidden-md hidden-lg img-responsive" src="../images/news-mbanner.jpg" alt="">
 </div>
 <!--banner end-->
 
@@ -116,10 +116,11 @@
 <script type="text/template" id="mainTemplate">
     <ul>
         <%$.each(mainData,function(index,item){%>
-        <li class="news-item clearfix">
+        <li class="news-item clearfix" data-id=<%=item.id%>>
             <div class="news-data">
-                <p class="day"><%=item.day%></p>
-                <span class="year"><%=item.year%></span>
+                <!--<p class="day"><%=item.day%></p>-->
+                <p class="day"><%=item.addtime.slice(8,10)%></p>
+                <span class="year"><%=item.addtime.slice(0,7)%></span>
             </div>
             <div class="news-des">
                 <p class="news-title"><a href="javascript:;"><%=item.title%></a></p>
@@ -135,10 +136,10 @@
 <script type="text/template" id="mainTemplate2">
     <ul>
         <%$.each(mainData,function(index,item){%>
-        <li class="news-item clearfix">
+        <li class="news-item clearfix" data-id=<%=item.id%>>
             <div class="news-data">
-                <p class="day"><%=item.day%></p>
-                <span class="year"><%=item.year%></span>
+                <p class="day"><%=item.addtime.slice(8,10)%></p>
+                <span class="year"><%=item.addtime.slice(0,7)%></span>
             </div>
             <div class="news-des">
                 <p class="news-title"><a href="javascript:;"><%=item.title%></a></p>
@@ -164,7 +165,7 @@
 
         function getLatestNews() {
             $.ajax({
-                url:'../data/latestnews.json',
+                url:'admin/businessnews.php',
                 type:'get',
                 async:false,
                 dataType:'json',
@@ -172,39 +173,37 @@
             });
 
             function bindHTML(data) {
-                //使用EJS中的RENDER向指定模板中提供需要的数据,EJS会把模板和字符串按照既定的规则进行解析渲染,最后得到的是数据和HTML结构拼接在一起的字符串
-                var mainHTML = $('#mainTemplate').html(); //获取模板的html结构
-                //ejs.render参数(模板的html结构,{模板数据:data数据})
+                data = data["data"];
+                var mainHTML = $('#mainTemplate').html();
                 var result = ejs.render(mainHTML,{mainData:data});
-                //现在的result又有结构又有数据,跟字符串拼接 str的结果一模一样,然后在输出到html的指定容器中
                 $('#latest').html(result);
 
                 $('#latest li').click(function () {
-                    var pageNum = $(this).index();
-                    window.location.href = './detail.html?pick=0&pagenum=' + pageNum
+                    var id = $(this).attr('data-id');
+                    console.log();
+                    window.location.href = './detail.html?pick=0&pagenum=' + id
                 })
             }
         }
         function getBusinessNews() {
             $.ajax({
-                url:'../data/businessnews.json',
+                url:'admin/businessnews.php',
                 type:'get',
                 async:false,
                 dataType:'json',
-                success:bindHTML
+                success:bindHTML,
             });
 
             function bindHTML(data) {
-                //使用EJS中的RENDER向指定模板中提供需要的数据,EJS会把模板和字符串按照既定的规则进行解析渲染,最后得到的是数据和HTML结构拼接在一起的字符串
-                var mainHTML = $('#mainTemplate2').html(); //获取模板的html结构
-                //ejs.render参数(模板的html结构,{模板数据:data数据})
+                data = data["data"];
+                console.log(data);
+                var mainHTML = $('#mainTemplate2').html();
                 var result = ejs.render(mainHTML,{mainData:data});
-                //现在的result又有结构又有数据,跟字符串拼接 str的结果一模一样,然后在输出到html的指定容器中
-                $('#business').html(result);
 
+                $('#business').html(result);
                 $('#business li').click(function () {
-                    var pageNum = $(this).index();
-                    window.location.href = './detail.html?pick=1&pagenum=' + pageNum
+                    var id = $(this).attr('data-id');
+                    window.location.href = './detail.html?pick=1&pagenum=' + id
                 })
             }
         }

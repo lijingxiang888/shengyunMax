@@ -90,35 +90,65 @@
 
 <!--banner begin-->
 <div class="banner container-fluid">
-    <img class="hidden-xs hidden-sm img-responsive" src="../images/contact-banner.jpg " alt="">
-    <img class="hidden-md hidden-lg img-responsive" src="../images/contact-mbanner.jpg " alt="">
+    <img class="hidden-xs img-responsive" src="../images/contact-banner.jpg " alt="">
+    <img class="hidden-sm hidden-md hidden-lg img-responsive" src="../images/contact-mbanner.jpg " alt="">
 </div>
 <!--banner end-->
 
 <!--map begin-->
 <div class="contact container">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <span class="glyphicon glyphicon-map-marker"></span>
-            地址：保定市竞秀区朝阳南大街358号盛泰中国02栋2003
+    <form class="msg form-horizontal col-sm-5 col-md-4" role="form" id="msg">
+        <div class="form-group">
+            <h3 class="col-sm-10 text-center">请发送信息给我们</h3>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <span class="glyphicon glyphicon-phone"></span>
-            联系人：李娇 13931361865 0312-2013862
+        <div class="form-group">
+            <label for="author" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="author" name="author" placeholder="请输入您的名字">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <span class="glyphicon glyphicon-envelope"></span>
-            Email：2853700873@qq.com
+        <div class="form-group">
+            <label for="userTel" class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-10">
+                <input type="tel" class="form-control" id="userTel" name="userTel" placeholder="请输入您的手机号码">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <span class="glyphicon glyphicon-send"></span>
-            乘车路线：市内公交 19、60、501等可到
+        <div class="form-group">
+            <label for="msgContent" class="col-sm-2 control-label">内容</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="msgContent" name="msgContent" rows="2" placeholder="请输入您要咨询的问题（50字以内）"></textarea>
+            </div>
+        </div>
+        <div class="form-group" >
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" class="btn btn-default" id="btn">提交</button>
+            </div>
+        </div>
+    </form>
+    <div class="col-sm-7 col-md-8" style="border-bottom: none">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="glyphicon glyphicon-map-marker"></span>
+                地址：保定市竞秀区朝阳南大街358号盛泰中国02栋2003
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="glyphicon glyphicon-phone"></span>
+                联系人：李娇 13931361865 0312-2013862
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="glyphicon glyphicon-envelope"></span>
+                Email：2853700873@qq.com
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <span class="glyphicon glyphicon-send"></span>
+                乘车路线：市内公交 19、60、501等可到
+            </div>
         </div>
     </div>
 </div>
@@ -188,6 +218,42 @@
 <script src="../js/bootstrap.js"></script>
 <script src="../js/href.js"></script>
 <script src="../js/switch.js"></script>
+<script>
+    $(function () {
+        $('#btn').click(function () {
+            var author = $.trim($('#author').val()),
+                tel = $.trim($('#userTel').val()),
+                content = $.trim($('#msgContent').val());
+
+            if (author && tel && content){
+                if (content.length <= 50){
+                    $.ajax({
+                        url: 'admin/message.php',
+                        type: 'POST',
+                        data:{author:author,tel:tel,content:content},
+                        dataType: 'json',
+                        success:function (result) {
+                            if (result['code'] && result['code'] === 1){
+                                alert(result['message']);
+                                $('#msg input').val('');
+                                $('#msg textarea').val('');
+                            }else {
+                                alert(result['提交失败']);
+                            }
+                        },
+                        error:function () {
+                            alert('出现错误，请重新刷新页面')
+                        }
+                    })
+                }else {
+                    alert('请您精简内容')
+                }
+            }else {
+                alert('请将信息填写完整')
+            }
+        });
+    })
+</script>
 <script>
     var map = new BMap.Map("map");
     // 创建地图实例

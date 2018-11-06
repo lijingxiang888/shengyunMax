@@ -17,6 +17,7 @@
 }
 /*detail 样式*/
 .detail {
+  min-height: 470px;
   color: #666;
 }
 .detail .detail-header {
