@@ -477,20 +477,20 @@
 <!--最新动态ejs模板-->
 <script type="text/template" id="mainTemplate">
     <%$.each(mainData,function(index,item){%>
-    <li>
+    <li data-id=<%=item.id%>>
         <span class="glyphicon glyphicon-triangle-right"></span>
         <a href="javascript:;"><%=item.title%></a>
-        <time class="pull-right"><%=item.date%></time>
+        <time class="pull-right"><%=item.addtime.slice(0,10)%></time>
     </li>
     <%})%>
 </script>
 <!--行业动态ejs模板-->
 <script type="text/template" id="mainTemplate2">
     <%$.each(mainData,function(index,item){%>
-    <li>
+    <li data-id=<%=item.id%>>
         <span class="glyphicon glyphicon-triangle-right"></span>
         <a href="javascript:;"><%=item.title%></a>
-        <time class="pull-right"><%=item.date%></time>
+        <time class="pull-right"><%=item.addtime.slice(0,10)%></time>
     </li>
     <%})%>
 </script>

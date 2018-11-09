@@ -13,6 +13,7 @@ if (!$_SESSION['isLogin']) {
 
 $title = $_POST["title"];
 $des = $_POST["des"];
+$type = $_POST["type"] == "0" ? "latestnews" : "businessnews";
 $content = $_POST["content"];
 //获得当前日期和时间
 date_default_timezone_set('PRC');
@@ -23,7 +24,7 @@ include('link.php');
 
 if ($title && $des && $content){
     //插入数据
-    $insert = "insert into businessnews(title,des,addtime,content) values('$title','$des','$addtime','$content')";
+    $insert = "insert into $type(title,des,addtime,content) values('$title','$des','$addtime','$content')";
     mysqli_query($link, $insert);
     mysqli_close($link);
     $result = array(

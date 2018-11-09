@@ -26,8 +26,8 @@ $(function () {
     $(window).scroll(myshow);
 
     //获取最新动态和行业资讯
-    var latesUrl = '../data/latestnews.json',
-        bussiUrl = '../data/businessnews.json';
+    var latesUrl = 'admin/latestnews.php',
+        bussiUrl = 'admin/businessnews.php';
 
     function getNews(url) {
         $.ajax({
@@ -38,14 +38,16 @@ $(function () {
             success:bindHTML
         });
 
-        function bindHTML(data) {
+        function bindHTML(result) {
+            console.log(result);
+            data = result['data'];
             if (/latestnews/.test(url)){
                 var mainHTML = $('#mainTemplate').html(); //获取模板的html结构
                 var result = ejs.render(mainHTML,{mainData:data}); //向模板里填数据
                 $('#latest').html(result); //现在的result又有结构又有数据
 
                 $('#latest li').click(function () { //li存在之后绑定点击事件
-                    var pageNum = $(this).index();
+                    var pageNum = $(this).attr('data-id');
                     window.location.href = './detail.html?pick=0&pagenum=' + pageNum
                 })
             }else {
@@ -54,7 +56,8 @@ $(function () {
                 $('#business').html(result);
 
                 $('#business li').click(function () {
-                    var pageNum = $(this).index();
+                    var pageNum = $(this).attr('data-id');
+                    console.log(pageNum);
                     window.location.href = './detail.html?pick=1&pagenum=' + pageNum
                 })
             }

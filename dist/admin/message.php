@@ -2,7 +2,7 @@
 header('content-type: application/json;charset=utf-8');
 error_reporting(E_ALL ^ E_NOTICE); //屏蔽页面显示的警告信息
 $author = $_POST["author"];
-$tel = (int)$_POST["tel"];
+$tel = $_POST["tel"];
 $content = $_POST["content"];
 $id = $_GET["id"];
 //获得当前日期和时间

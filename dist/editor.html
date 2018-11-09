@@ -59,6 +59,17 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="col-sm-2 control-label">类型</label>
+            <div class="col-sm-10">
+                <label class="radio-inline">
+                    <input type="radio" name="type" id="latestType" value="0" checked> 最新动态
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="type" id="businessType" value="1"> 行业新闻
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="content" class="col-sm-2 control-label">内容</label>
             <div class="col-sm-10" id="content" name="content"></div>
         </div>
@@ -82,12 +93,13 @@
         $('#btn').click(function () {
             var title = $.trim($('#title').val()),
                 des = $.trim($('#des').val()),
+                type = $('input[type=radio]:checked').val(),
                 content = editor.txt.html();
             if (title && des && content){
                 $.ajax({
                     url: 'admin/editor.php',
                     type: 'POST',
-                    data:{title:title,des:des,content:content},
+                    data:{title:title,des:des,type:type,content:content},
                     dataType: 'json',
                     success: function (result) {
                         console.log(result);

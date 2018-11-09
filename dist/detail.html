@@ -185,7 +185,7 @@
         loc = Number(url.substring(url.lastIndexOf('=') + 1, url.length));
 
         $.ajax({
-            url: 'admin/detail.php?id=' + loc,
+            url: 'admin/detail.php?id=' + loc + '&type=' + pickUrl,
             type: 'GET',
             dataType: 'json',
             success: bindHTML,
